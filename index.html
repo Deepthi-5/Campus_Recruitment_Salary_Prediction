@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device=1.0">
+    <title>Campus Recruitment Salary Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a5dacc;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function checkBoard() {
+            var boardType = document.getElementById("hsc_b").value;
+            var boardTextField = document.getElementById("hsc_b_text");
+
+            if (boardType === "Others") {
+                boardTextField.style.display = "block";
+            } else {
+                boardTextField.style.display = "none";
+            }
+        }
+
+        function checkBranch() {
+            var degreeType = document.getElementById("degree_t").value;
+            var branchField = document.getElementById("branch-group");
+            var specialisationField = document.getElementById("specialisation-group");
+            
+            // Hide both branch and specialisation initially
+            branchField.style.display = "none";
+            specialisationField.style.display = "none";
+
+            if (degreeType === "BTech") {
+                branchField.style.display = "block";
+                checkSpecialisation(); // Check specialisation on initial load
+            } else {
+                branchField.style.display = "none";
+            }
+        }
+
+        function checkSpecialisation() {
+            var branchType = document.getElementById("branch").value;
+            var specialisationField = document.getElementById("specialisation-group");
+
+            if (branchType === "CSE") {
+                specialisationField.style.display = "block";
+            } else {
+                specialisationField.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Campus Recruitment Salary Prediction</h1>
+        <form action="/submit" method="POST">
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select</option>
+                    <option value="0">Female</option>
+                    <option value="1">Male</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ssc_p">Score of Secondary School (%):</label>
+                <input type="text" id="ssc_p" name="ssc_p" required>
+            </div>
+            <div class="form-group">
+                <label for="hsc_p">Score of High School (%):</label>
+                <input type="text" id="hsc_p" name="hsc_p" required>
+            </div>
+            <div class="form-group">
+                <label for="hsc_b">Board of High School:</label>
+                <select id="hsc_b" name="hsc_b" onchange="checkBoard()" required>
+                    <option value="">Select</option>
+                    <option value="Central">Central</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            <div class="form-group" id="hsc_b_text" style="display:none;">
+                <label for="hsc_b_other">Enter Board Name:</label>
+                <input type="text" id="hsc_b_other" name="hsc_b_other">
+            </div>
+            <div class="form-group">
+                <label for="hsc_s">Stream of High School:</label>
+                <select id="hsc_s" name="hsc_s" required>
+                    <option value="">Select</option>
+                    <option value="MPC">MPC</option>
+                    <option value="BiPC">BiPC</option>
+                    <option value="MEC">MEC</option>
+                    <option value="CEC">CEC</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="degree_p">Degree Percentage:</label>
+                <input type="text" id="degree_p" name="degree_p" required>
+            </div>
+            <div class="form-group">
+                <label for="degree_t">Type of Undergraduate Degree:</label>
+                <select id="degree_t" name="degree_t" onchange="checkBranch()" required>
+                    <option value="">Select</option>
+                    <option value="BTech">BTech</option>
+                    <option value="BBA">BBA</option>
+                    <option value="BA">BA</option>
+                    <option value="BSc">BSc</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            <div class="form-group" id="branch-group" style="display:none;">
+                <label for="branch">Branch:</label>
+                <select id="branch" name="branch" onchange="checkSpecialisation()">
+                    <option value="">Select</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="BioTech">BioTech</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Civil">Civil</option>
+                </select>
+            </div>
+            <div class="form-group" id="specialisation-group" style="display:none;">
+                <label for="specialisation">Specialisation:</label>
+                <select id="specialisation" name="specialisation">
+                    <option value="">Select</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Machine Learning">Machine Learning</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Robotics">Robotics</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="workex">Work Experience:</label>
+                <select id="workex" name="workex" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            <input type="submit" class="submit-button" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
